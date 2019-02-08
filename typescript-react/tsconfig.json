@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
     "esModuleInterop": true,
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "noStrictGenericChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "module": "es2015",
+    "outDir": "build",
     "target": "es2017",
-    "jsx": "react"
+    "jsx": "react",
+    "allowJs": true,
+    "strict": true,
+    "strictNullChecks": false,
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
-  "exclude": ["node_modules"]
+  "include": ["src"]
 }

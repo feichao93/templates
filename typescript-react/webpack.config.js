@@ -1,12 +1,13 @@
 const webpack = require('webpack')
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src/main.tsx'),
-  output: {
-    publicPath: '/public',
-  },
-  plugins: [new webpack.HotModuleReplacementPlugin()],
+  entry: [
+    'normalize.css',
+    '@blueprintjs/core/lib/css/blueprint.css',
+    path.resolve(__dirname, 'src/main.tsx'),
+  ],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
   },
@@ -14,20 +15,10 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              plugins: ['react-hot-loader/babel'],
-            },
-          },
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true,
-            },
-          },
-        ],
+        loader: 'ts-loader',
+        options: {
+          transpileOnly: true,
+        },
         exclude: /node_modules/,
       },
       {
@@ -40,6 +31,14 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: path.resolve(__dirname, 'src/index.html'),
+    }),
+  ],
+
   devServer: {
     contentBase: __dirname,
     hot: true,

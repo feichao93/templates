@@ -1,14 +1,21 @@
-import 'normalize.css'
-import '@blueprintjs/core/lib/css/blueprint.css'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
 import App from './components/App'
-import store from './store'
 
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('container'),
-)
+function render(Component: React.ComponentType) {
+  ReactDOM.render(<Component />, document.querySelector('#app'))
+}
+
+render(App)
+
+declare global {
+  interface NodeModule {
+    hot: any
+  }
+}
+if (module.hot) {
+  module.hot.accept('./components/App.tsx', () => {
+    const { default: App } = require('./components/App.tsx')
+    render(App)
+  })
+}
