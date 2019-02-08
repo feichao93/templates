@@ -5,5 +5,5 @@ import { run } from '@cycle/run'
 import App from './App'
 
 run(App, {
-  DOM: makeDOMDriver('#container'),
+  DOM: makeDOMDriver('#app'),
 })

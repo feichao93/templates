@@ -1,16 +1,12 @@
 const webpack = require('webpack')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-module.exports = env => {
-  env = env || {}
-  const isProduction = env.prod
+module.exports = (env, argv) => {
+  const isProduction = argv.mode === 'production'
 
   return {
     context: __dirname,
-    devtool: isProduction ? false : 'source-map',
-
     entry: './src/main.tsx',
 
     output: {
@@ -23,7 +19,7 @@ module.exports = env => {
     },
 
     module: {
-      loaders: [
+      rules: [
         { test: /\.tsx?$/, loaders: ['ts-loader'] },
         { test: /\.css$/, loaders: ['style-loader', 'css-loader'] },
         { test: /\.styl$/, loaders: ['style-loader', 'css-loader', 'stylus-loader'] },
@@ -34,7 +30,7 @@ module.exports = env => {
     plugins: [
       new HtmlWebpackPlugin({
         title: 'TITLE OF THE HTML PAGE',
-        template: 'src/template.html',
+        template: 'src/index.html',
       }),
       new webpack.DefinePlugin({
         'node.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
@@ -44,7 +40,7 @@ module.exports = env => {
       }),
     ].concat(
       isProduction
-        ? [new UglifyJsPlugin()]
+        ? []
         : [new webpack.NamedModulesPlugin(), new webpack.HotModuleReplacementPlugin()],
     ),
 
